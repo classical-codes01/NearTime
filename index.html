@@ -1,0 +1,483 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>NEARTIME - Premium Barber Booking Platform</title>
+    <link rel="stylesheet" href="styles.css">
+    <link rel="icon" href="data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'><text y='.9em' font-size='90'>✂️</text></svg>">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+</head>
+<body>
+    <header class="header">
+        <div class="container">
+            <div class="logo">
+                <i class="fas fa-scissors"></i>
+                <span>NEARTIME</span>
+            </div>
+            <nav class="nav">
+                <ul class="nav-list">
+                    <li><a href="#home">Home</a></li>
+                    <li><a href="#search">Search</a></li>
+                    <li><a href="#features">Features</a></li>
+                    <li><a href="#contact">Contact</a></li>
+                </ul>
+            </nav>
+            <div class="header-actions">
+                <button class="btn btn-outline" id="langToggle">हिंदी</button>
+                <button class="btn btn-primary" id="bookNowHeader">Book Now</button>
+            </div>
+            <button class="mobile-menu-btn" id="mobileMenuBtn">
+                <i class="fas fa-bars"></i>
+            </button>
+        </div>
+    </header>
+
+    <section class="hero" id="home">
+        <div class="hero-overlay"></div>
+        <div class="container">
+            <div class="hero-content">
+                <h1 class="hero-title" data-en="Book Your Perfect Haircut" data-hi="अपनी परफेक्ट हेयरकट बुक करें">Book Your Perfect Haircut</h1>
+                <p class="hero-subtitle" data-en="Find and book appointments at the best barber shops near you" data-hi="अपने आस-पास के सबसे अच्छे बार्बर शॉप पर अपॉइंटमेंट बुक करें">Find and book appointments at the best barber shops near you</p>
+                <div class="hero-search">
+                    <div class="search-box">
+                        <i class="fas fa-map-marker-alt"></i>
+                        <input type="text" id="heroLocation" placeholder="Enter your location" data-en="Enter your location" data-hi="अपना स्थान दर्ज करें">
+                    </div>
+                    <button class="btn btn-primary" id="heroSearchBtn">
+                        <i class="fas fa-search"></i>
+                        <span data-en="Search" data-hi="खोजें">Search</span>
+                    </button>
+                </div>
+                <div class="hero-stats">
+                    <div class="stat">
+                        <span class="stat-number">500+</span>
+                        <span class="stat-label" data-en="Barber Shops" data-hi="बार्बर शॉप">Barber Shops</span>
+                    </div>
+                    <div class="stat">
+                        <span class="stat-number">10K+</span>
+                        <span class="stat-label" data-en="Happy Customers" data-hi="खुश ग्राहक">Happy Customers</span>
+                    </div>
+                    <div class="stat">
+                        <span class="stat-number">4.8</span>
+                        <span class="stat-label" data-en="Average Rating" data-hi="औसत रेटिंग">Average Rating</span>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <section class="search-section" id="search">
+        <div class="container">
+            <div class="section-header">
+                <h2 class="section-title" data-en="Find Your Barber" data-hi="अपना बार्बर खोजें">Find Your Barber</h2>
+                <p class="section-subtitle" data-en="Search by location, service, price, or rating" data-hi="स्थान, सेवा, मूल्य या रेटिंग से खोजें">Search by location, service, price, or rating</p>
+            </div>
+            <div class="search-filters">
+                <div class="filter-group">
+                    <label data-en="Location" data-hi="स्थान">Location</label>
+                    <div class="filter-input">
+                        <i class="fas fa-map-marker-alt"></i>
+                        <input type="text" id="searchLocation" placeholder="Enter location" data-en="Enter location" data-hi="स्थान दर्ज करें">
+                    </div>
+                </div>
+                <div class="filter-group">
+                    <label data-en="Service" data-hi="सेवा">Service</label>
+                    <div class="filter-input">
+                        <i class="fas fa-cut"></i>
+                        <select id="searchService">
+                            <option value="" data-en="All Services" data-hi="सभी सेवाएं">All Services</option>
+                            <option value="haircut" data-en="Haircut" data-hi="हेयरकट">Haircut</option>
+                            <option value="beard" data-en="Beard Trim" data-hi="बीड ट्रिम">Beard Trim</option>
+                            <option value="styling" data-en="Hair Styling" data-hi="हेयर स्टाइलिंग">Hair Styling</option>
+                            <option value="shave" data-en="Shave" data-hi="शेव">Shave</option>
+                            <option value="combo" data-en="Combo Pack" data-hi="कॉम्बो पैक">Combo Pack</option>
+                        </select>
+                    </div>
+                </div>
+                <div class="filter-group">
+                    <label data-en="Price Range" data-hi="मूल्य सीमा">Price Range</label>
+                    <div class="filter-input">
+                        <i class="fas fa-rupee-sign"></i>
+                        <select id="searchPrice">
+                            <option value="" data-en="Any Price" data-hi="कोई भी मूल्य">Any Price</option>
+                            <option value="0-200" data-en="Under ₹200" data-hi="₹200 के अंदर">Under ₹200</option>
+                            <option value="200-400" data-en="₹200 - ₹400" data-hi="₹200 - ₹400">₹200 - ₹400</option>
+                            <option value="400-600" data-en="₹400 - ₹600" data-hi="₹400 - ₹600">₹400 - ₹600</option>
+                            <option value="600+" data-en="Above ₹600" data-hhi="₹600 से ऊपर">Above ₹600</option>
+                        </select>
+                    </div>
+                </div>
+                <div class="filter-group">
+                    <label data-en="Minimum Rating" data-hi="न्यूनतम रेटिंग">Minimum Rating</label>
+                    <div class="filter-input">
+                        <i class="fas fa-star"></i>
+                        <select id="searchRating">
+                            <option value="0" data-en="Any Rating" data-hi="कोई भी रेटिंग">Any Rating</option>
+                            <option value="4.5" data-en="4.5+ Stars" data-hi="4.5+ स्टार">4.5+ Stars</option>
+                            <option value="4.0" data-en="4.0+ Stars" data-hhi="4.0+ स्टार">4.0+ Stars</option>
+                            <option value="3.5" data-en="3.5+ Stars" data-hhi="3.5+ स्टार">3.5+ Stars</option>
+                        </select>
+                    </div>
+                </div>
+                <button class="btn btn-primary search-btn" id="searchBtn">
+                    <i class="fas fa-search"></i>
+                    <span data-en="Search Nearby Shops" data-hi="आस-पास की शॉप खोजें">Search Nearby Shops</span>
+                </button>
+            </div>
+            <div class="search-results" id="searchResults">
+                <div class="results-grid" id="resultsGrid">
+                </div>
+                <div class="no-results" id="noResults">
+                    <i class="fas fa-search"></i>
+                    <p data-en="No barber shops found. Try different filters." data-hi="कोई बार्बर शॉप नहीं मिला। अलग फ़िल्टर आज़माएं।">No barber shops found. Try different filters.</p>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <section class="features" id="features">
+        <div class="container">
+            <div class="section-header">
+                <h2 class="section-title" data-en="Why Choose NEARTIME" data-hi="NEARTIME क्यों चुनें">Why Choose NEARTIME</h2>
+                <p class="section-subtitle" data-en="Experience the future of barber booking" data-hi="बार्बर बुकिंग का भविष्य अनुभव करें">Experience the future of barber booking</p>
+            </div>
+            <div class="features-grid">
+                <div class="feature-card">
+                    <div class="feature-icon">
+                        <i class="fas fa-clock"></i>
+                    </div>
+                    <h3 data-en="Real-time Slots" data-hi="रीयल-टाइम स्लॉट">Real-time Slots</h3>
+                    <p data-en="See available time slots instantly and book in just a few clicks" data-hi="तुरंत उपलब्ध समय स्लॉट देखें और बस कुछ क्लिक में बुक करें">See available time slots instantly and book in just a few clicks</p>
+                </div>
+                <div class="feature-card">
+                    <div class="feature-icon">
+                        <i class="fas fa-map-marked-alt"></i>
+                    </div>
+                    <h3 data-en="Location Based" data-hi="स्थान-आधारित">Location Based</h3>
+                    <p data-en="Find barber shops nearest to your location" data-hi="अपने स्थान के निकटतम बार्बर शॉप खोजें">Find barber shops nearest to your location</p>
+                </div>
+                <div class="feature-card">
+                    <div class="feature-icon">
+                        <i class="fas fa-star"></i>
+                    </div>
+                    <h3 data-en="Real Reviews" data-hi="असली समीक्षाएं">Real Reviews</h3>
+                    <p data-en="Read authentic customer reviews and ratings" data-hi="प्रामाणिक ग्राहक समीक्षाएं और रेटिंग पढ़ें">Read authentic customer reviews and ratings</p>
+                </div>
+                <div class="feature-card">
+                    <div class="feature-icon">
+                        <i class="fas fa-credit-card"></i>
+                    </div>
+                    <h3 data-en="Secure Payments" data-hi="सुरक्षित भुगतान">Secure Payments</h3>
+                    <p data-en="UPI, digital wallets, and card payments supported" data-hi="UPI, डिजिटल वॉलेट और कार्ड भुगतान समर्थित">UPI, digital wallets, and card payments supported</p>
+                </div>
+                <div class="feature-card">
+                    <div class="feature-icon">
+                        <i class="fas fa-bell"></i>
+                    </div>
+                    <h3 data-en="Instant Alerts" data-hi="तुरंत अलर्ट">Instant Alerts</h3>
+                    <p data-en="Get email confirmations and booking reminders" data-hi="ईमेल पुष्टि और बुकिंग अनुस्मारक प्राप्त करें">Get email confirmations and booking reminders</p>
+                </div>
+                <div class="feature-card">
+                    <div class="feature-icon">
+                        <i class="fas fa-history"></i>
+                    </div>
+                    <h3 data-en="Booking History" data-hi="बुकिंग इतिहास">Booking History</h3>
+                    <p data-en="Track your bookings and appointment details" data-hi="अपनी बुकिंग और अपॉइंटमेंट विवरण ट्रैक करें">Track your bookings and appointment details</p>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <section class="testimonials" id="testimonials">
+        <div class="container">
+            <div class="section-header">
+                <h2 class="section-title" data-en="What Our Customers Say" data-hi="हमारे ग्राहक क्या कहते हैं">What Our Customers Say</h2>
+                <p class="section-subtitle" data-en="Join thousands of satisfied customers" data-hi="हजारों संतुष्ट ग्राहकों में शामिल हों">Join thousands of satisfied customers</p>
+            </div>
+            <div class="testimonials-grid">
+                <div class="testimonial-card">
+                    <div class="testimonial-rating">
+                        <i class="fas fa-star"></i>
+                        <i class="fas fa-star"></i>
+                        <i class="fas fa-star"></i>
+                        <i class="fas fa-star"></i>
+                        <i class="fas fa-star"></i>
+                    </div>
+                    <p class="testimonial-text" data-en="Amazing service! Found a great barber shop near my location and booked in minutes. Highly recommended!" data-hi="अद्भुत सेवा! मेरे स्थान के पास एक बढ़िया बार्बर शॉप मिला और मिनटों में बुक कर लिया। अत्यधिक अनुशंसित!">Amazing service! Found a great barber shop near my location and booked in minutes. Highly recommended!</p>
+                    <div class="testimonial-author">
+                        <div class="author-avatar">
+                            <i class="fas fa-user"></i>
+                        </div>
+                        <div class="author-info">
+                            <h4>Rahul Sharma</h4>
+                            <span data-en="Customer" data-hi="ग्राहक">Customer</span>
+                        </div>
+                    </div>
+                </div>
+                <div class="testimonial-card">
+                    <div class="testimonial-rating">
+                        <i class="fas fa-star"></i>
+                        <i class="fas fa-star"></i>
+                        <i class="fas fa-star"></i>
+                        <i class="fas fa-star"></i>
+                        <i class="fas fa-star-half-alt"></i>
+                    </div>
+                    <p class="testimonial-text" data-en="Very convenient app. The real-time slot availability feature is really helpful. Saves a lot of time!" data-hi="बहुत सुविधाजनक ऐप। रियल-टाइम स्लॉट उपलब्धता सुविधा वाकई मददगार है। बहुत समय बचाता है!">Very convenient app. The real-time slot availability feature is really helpful. Saves a lot of time!</p>
+                    <div class="testimonial-author">
+                        <div class="author-avatar">
+                            <i class="fas fa-user"></i>
+                        </div>
+                        <div class="author-info">
+                            <h4> Amit Singh</h4>
+                            <span data-en="Customer" data-hi="ग्राहक">Customer</span>
+                        </div>
+                    </div>
+                </div>
+                <div class="testimonial-card">
+                    <div class="testimonial-rating">
+                        <i class="fas fa-star"></i>
+                        <i class="fas fa-star"></i>
+                        <i class="fas fa-star"></i>
+                        <i class="fas fa-star"></i>
+                        <i class="fas fa-star"></i>
+                    </div>
+                    <p class="testimonial-text" data-en="Great experience! The payment options are so convenient and the booking confirmation was instant." data-hi="बढ़िया अनुभव! भुगतान विकल्प बहुत सुविधाजनक हैं और बुकिंग पुष्टि तुरंत थी।">Great experience! The payment options are so convenient and the booking confirmation was instant.</p>
+                    <div class="testimonial-author">
+                        <div class="author-avatar">
+                            <i class="fas fa-user"></i>
+                        </div>
+                        <div class="author-info">
+                            <h4>Vikash Yadav</h4>
+                            <span data-en="Customer" data-hi="ग्राहक">Customer</span>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <section class="cta">
+        <div class="container">
+            <div class="cta-content">
+                <h2 data-en="Ready to Get Your Perfect Haircut?" data-hi="अपना परफेक्ट हेयरकट लेने के लिए तैयार हैं?">Ready to Get Your Perfect Haircut?</h2>
+                <p data-en="Book your appointment today and experience the best barber services near you" data-hi="आज अपनी अपॉइंटमेंट बुक करें और अपने आस-पास की सर्वश्रेष्ठ बार्बर सेवाओं का अनुभव लें">Book your appointment today and experience the best barber services near you</p>
+                <button class="btn btn-primary btn-large" id="ctaBookNow">
+                    <i class="fas fa-calendar-check"></i>
+                    <span data-en="Book Now" data-hi="अभी बुक करें">Book Now</span>
+                </button>
+            </div>
+        </div>
+    </section>
+
+    <section class="contact" id="contact">
+        <div class="container">
+            <div class="section-header">
+                <h2 class="section-title" data-en="Contact Us" data-hi="हमसे संपर्क करें">Contact Us</h2>
+                <p class="section-subtitle" data-en="Have questions? We'd love to hear from you" data-hi="प्रश्न हैं? हम आपसे सुनना पसंद करेंगे">Have questions? We'd love to hear from you</p>
+            </div>
+            <div class="contact-grid">
+                <div class="contact-info">
+                    <div class="contact-item">
+                        <i class="fas fa-map-marker-alt"></i>
+                        <div>
+                            <h4 data-en="Address" data-hi="पता">Address</h4>
+                            <p>Prayagraj, Uttar Pradesh, India</p>
+                        </div>
+                    </div>
+                    <div class="contact-item">
+                        <i class="fas fa-phone"></i>
+                        <div>
+                            <h4 data-en="Phone" data-hi="फ़ोन">Phone</h4>
+                            <p>+91 9999 9999 99</p>
+                        </div>
+                    </div>
+                    <div class="contact-item">
+                        <i class="fas fa-envelope"></i>
+                        <div>
+                            <h4 data-en="Email" data-hi="ईमेल">Email</h4>
+                            <p>support@neartime.com</p>
+                        </div>
+                    </div>
+                </div>
+                <form class="contact-form" id="contactForm">
+                    <div class="form-group">
+                        <input type="text" id="contactName" placeholder="Your Name" required data-en-placeholder="Your Name" data-hi-placeholder="आपका नाम">
+                    </div>
+                    <div class="form-group">
+                        <input type="email" id="contactEmail" placeholder="Your Email" required data-en-placeholder="Your Email" data-hi-placeholder="आपका ईमेल">
+                    </div>
+                    <div class="form-group">
+                        <textarea id="contactMessage" placeholder="Your Message" rows="5" required data-en-placeholder="आपका संदेश" data-hi-placeholder="Your Message"></textarea>
+                    </div>
+                    <button type="submit" class="btn btn-primary">
+                        <i class="fas fa-paper-plane"></i>
+                        <span data-en="Send Message" data-hi="संदेश भेजें">Send Message</span>
+                    </button>
+                </form>
+            </div>
+        </div>
+    </section>
+
+    <footer class="footer">
+        <div class="container">
+            <div class="footer-content">
+                <div class="footer-brand">
+                    <div class="logo">
+                        <i class="fas fa-scissors"></i>
+                        <span>NEARTIME</span>
+                    </div>
+                    <p data-en="Your trusted platform for booking barber appointments" data-hi="बार्बर अपॉइंटमेंट बुक करने के लिए आपका भरोसेमंद प्लेटफॉर्म">Your trusted platform for booking barber appointments</p>
+                </div>
+                <div class="footer-links">
+                    <h4 data-en="Quick Links" data-hi="त्वरित लिंक">Quick Links</h4>
+                    <ul>
+                        <li><a href="#home">Home</a></li>
+                        <li><a href="#search">Search</a></li>
+                        <li><a href="#features">Features</a></li>
+                        <li><a href="#contact">Contact</a></li>
+                    </ul>
+                </div>
+                <div class="footer-links">
+                    <h4 data-en="Services" data-hi="सेवाएं">Services</h4>
+                    <ul>
+                        <li><a href="#">Haircut</a></li>
+                        <li><a href="#">Beard Trim</a></li>
+                        <li><a href="#">Hair Styling</a></li>
+                        <li><a href="#">Shave</a></li>
+                    </ul>
+                </div>
+                <div class="footer-social">
+                    <h4 data-en="Follow Us" data-hi="हमें फॉलो करें">Follow Us</h4>
+                    <div class="social-icons">
+                        <a href="#"><i class="fab fa-facebook-f"></i></a>
+                        <a href="#"><i class="fab fa-twitter"></i></a>
+                        <a href="#"><i class="fab fa-instagram"></i></a>
+                        <a href="#"><i class="fab fa-linkedin-in"></i></a>
+                    </div>
+                </div>
+            </div>
+            <div class="footer-bottom">
+                <p>&copy; 2024 NEARTIME. All rights reserved.</p>
+            </div>
+        </div>
+    </footer>
+
+    <div class="modal" id="bookingModal">
+        <div class="modal-content">
+            <button class="modal-close" id="closeBookingModal">&times;</button>
+            <div class="booking-steps">
+                <div class="step-indicator">
+                    <div class="step active" data-step="1">
+                        <span class="step-number">1</span>
+                        <span class="step-label" data-en="Select Shop" data-hi="शॉप चुनें">Select Shop</span>
+                    </div>
+                    <div class="step" data-step="2">
+                        <span class="step-number">2</span>
+                        <span class="step-label" data-en="Choose Slot" data-hi="स्लॉट चुनें">Choose Slot</span>
+                    </div>
+                    <div class="step" data-step="3">
+                        <span class="step-number">3</span>
+                        <span class="step-label" data-en="Your Details" data-hi="आपका विवरण">Your Details</span>
+                    </div>
+                    <div class="step" data-step="4">
+                        <span class="step-number">4</span>
+                        <span class="step-label" data-en="Service" data-hi="सेवा">Service</span>
+                    </div>
+                    <div class="step" data-step="5">
+                        <span class="step-number">5</span>
+                        <span class="step-label" data-en="Review" data-hi="समीक्षा">Review</span>
+                    </div>
+                    <div class="step" data-step="6">
+                        <span class="step-number">6</span>
+                        <span class="step-label" data-en="Payment" data-hi="भुगतान">Payment</span>
+                    </div>
+                    <div class="step" data-step="7">
+                        <span class="step-number">7</span>
+                        <span class="step-label" data-en="Confirm" data-hi="पुष्टि">Confirm</span>
+                    </div>
+                </div>
+                <div class="booking-form-container">
+                    <div class="booking-step-content" data-step="1">
+                        <h3 data-en="Select a Barber Shop" data-hi="बार्बर शॉप चुनें">Select a Barber Shop</h3>
+                        <div class="shop-list" id="shopList"></div>
+                    </div>
+                    <div class="booking-step-content" data-step="2">
+                        <h3 data-en="Choose Time Slot" data-hi="समय स्लॉट चुनें">Choose Time Slot</h3>
+                        <div class="slot-grid" id="slotGrid"></div>
+                    </div>
+                    <div class="booking-step-content" data-step="3">
+                        <h3 data-en="Enter Your Details" data-hi="अपना विवरण दर्ज करें">Enter Your Details</h3>
+                        <form id="customerDetailsForm">
+                            <div class="form-group">
+                                <label data-en="Full Name" data-hi="पूरा नाम">Full Name</label>
+                                <input type="text" id="customerName" required data-en-placeholder="Enter your full name" data-hi-placeholder="अपना पूरा नाम दर्ज करें">
+                            </div>
+                            <div class="form-group">
+                                <label data-en="Phone Number" data-hi="फ़ोन नंबर">Phone Number</label>
+                                <input type="tel" id="customerPhone" required data-en-placeholder="Enter your phone number" data-hi-placeholder="अपना फ़ोन नंबर दर्ज करें">
+                            </div>
+                            <div class="form-group">
+                                <label data-en="Email Address" data-hhi="ईमेल पता">Email Address</label>
+                                <input type="email" id="customerEmail" required data-en-placeholder="Enter your email" data-hi-placeholder="अपना ईमेल दर्ज करें">
+                            </div>
+                            <button type="submit" class="btn btn-primary">
+                                <span data-en="Continue" data-hi="जारी रखें">Continue</span>
+                            </button>
+                        </form>
+                    </div>
+                    <div class="booking-step-content" data-step="4">
+                        <h3 data-en="Select Service" data-hi="सेवा चुनें">Select Service</h3>
+                        <div class="service-list" id="serviceList"></div>
+                    </div>
+                    <div class="booking-step-content" data-step="5">
+                        <h3 data-en="Review Your Booking" data-hi="अपनी बुकिंग की समीक्षा करें">Review Your Booking</h3>
+                        <div class="booking-summary" id="bookingSummary"></div>
+                        <button class="btn btn-primary" id="proceedToPayment">
+                            <span data-en="Proceed to Payment" data-hi="भुगतान के लिए आगे बढ़ें">Proceed to Payment</span>
+                        </button>
+                    </div>
+                    <div class="booking-step-content" data-step="6">
+                        <h3 data-en="Choose Payment Method" data-hi="भुगतान विधि चुनें">Choose Payment Method</h3>
+                        <div class="payment-methods">
+                            <div class="payment-option" data-method="upi">
+                                <i class="fas fa-mobile-alt"></i>
+                                <span>UPI</span>
+                            </div>
+                            <div class="payment-option" data-method="wallet">
+                                <i class="fas fa-wallet"></i>
+                                <span data-en="Wallet" data-hi="वॉलेट">Wallet</span>
+                            </div>
+                            <div class="payment-option" data-method="card">
+                                <i class="fas fa-credit-card"></i>
+                                <span data-en="Card" data-hi="कार्ड">Card</span>
+                            </div>
+                        </div>
+                        <div class="payment-details" id="paymentDetails"></div>
+                    </div>
+                    <div class="booking-step-content" data-step="7">
+                        <div class="success-message">
+                            <i class="fas fa-check-circle"></i>
+                            <h3 data-en="Booking Confirmed!" data-hi="बुकिंग की पुष्टि हो गई!">Booking Confirmed!</h3>
+                            <p data-en="Your appointment has been successfully booked." data-hi="आपकी अपॉइंटमेंट सफलतापूर्वक बुक हो गई है।">Your appointment has been successfully booked.</p>
+                            <div class="booking-confirmation" id="bookingConfirmation"></div>
+                            <button class="btn btn-primary" id="doneBooking">
+                                <span data-en="Done" data-hi="हो गया">Done</span>
+                            </button>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <div class="notification" id="notification">
+        <div class="notification-content">
+            <i class="fas fa-check-circle"></i>
+            <span id="notificationText"></span>
+        </div>
+    </div>
+
+    <script src="script.js"></script>
+</body>
+</html>
