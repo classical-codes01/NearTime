@@ -1,0 +1,514 @@
+import React, { useState } from 'react';
+import { Store, Lock, Mail, Phone, MapPin, User, Building2, Tag, Clock, CheckCircle, ArrowRight, X } from 'lucide-react';
+
+export default function NeartimeAuth() {
+  const [activeTab, setActiveTab] = useState('login');
+  const [businessType, setBusinessType] = useState('');
+
+  return (
+    <div className="min-h-screen bg-gradient-to-br from-[#0f0a1e] via-[#1a1033] to-[#0a1628] text-white relative overflow-hidden">
+      <style>{`
+        @import url('https://fonts.googleapis.com/css2?family=Outfit:wght@300;400;500;600;700;800&family=DM+Sans:wght@400;500;700&display=swap');
+        
+        * {
+          margin: 0;
+          padding: 0;
+          box-sizing: border-box;
+        }
+
+        :root {
+          --purple-primary: #7c3aed;
+          --purple-dark: #5b21b6;
+          --purple-light: #a78bfa;
+          --cyan-primary: #06b6d4;
+          --cyan-light: #22d3ee;
+          --cyan-dark: #0891b2;
+          --dark-bg: #0f0a1e;
+          --card-bg: #1e1b2e;
+          --input-bg: #2a2640;
+        }
+
+        body {
+          font-family: 'DM Sans', sans-serif;
+        }
+
+        .heading-font {
+          font-family: 'Outfit', sans-serif;
+        }
+
+        /* Animated gradient background */
+        .gradient-mesh {
+          position: fixed;
+          inset: 0;
+          opacity: 0.4;
+          background: 
+            radial-gradient(circle at 20% 30%, var(--purple-primary) 0%, transparent 50%),
+            radial-gradient(circle at 80% 70%, var(--cyan-primary) 0%, transparent 50%),
+            radial-gradient(circle at 50% 50%, var(--purple-dark) 0%, transparent 70%);
+          animation: meshFloat 20s ease-in-out infinite;
+          filter: blur(80px);
+        }
+
+        @keyframes meshFloat {
+          0%, 100% { transform: scale(1) rotate(0deg); }
+          50% { transform: scale(1.1) rotate(5deg); }
+        }
+
+        /* Floating particles */
+        .particle {
+          position: absolute;
+          border-radius: 50%;
+          background: linear-gradient(135deg, var(--purple-light), var(--cyan-light));
+          opacity: 0.1;
+          animation: float 15s infinite;
+        }
+
+        .particle:nth-child(1) {
+          width: 300px;
+          height: 300px;
+          top: 10%;
+          left: 10%;
+          animation-delay: 0s;
+        }
+
+        .particle:nth-child(2) {
+          width: 200px;
+          height: 200px;
+          top: 60%;
+          right: 15%;
+          animation-delay: 3s;
+        }
+
+        .particle:nth-child(3) {
+          width: 150px;
+          height: 150px;
+          bottom: 20%;
+          left: 20%;
+          animation-delay: 6s;
+        }
+
+        @keyframes float {
+          0%, 100% { transform: translate(0, 0); }
+          33% { transform: translate(30px, -30px); }
+          66% { transform: translate(-20px, 20px); }
+        }
+
+        /* Card animations */
+        .fade-in-up {
+          animation: fadeInUp 0.8s ease-out forwards;
+          opacity: 0;
+        }
+
+        @keyframes fadeInUp {
+          to {
+            opacity: 1;
+            transform: translateY(0);
+          }
+        }
+
+        .fade-in-up {
+          transform: translateY(30px);
+        }
+
+        .delay-1 { animation-delay: 0.1s; }
+        .delay-2 { animation-delay: 0.2s; }
+        .delay-3 { animation-delay: 0.3s; }
+        .delay-4 { animation-delay: 0.4s; }
+        .delay-5 { animation-delay: 0.5s; }
+
+        /* Glass morphism effect */
+        .glass-card {
+          background: rgba(30, 27, 46, 0.6);
+          backdrop-filter: blur(20px);
+          border: 1px solid rgba(167, 139, 250, 0.2);
+          box-shadow: 
+            0 8px 32px 0 rgba(124, 58, 237, 0.15),
+            inset 0 1px 0 0 rgba(255, 255, 255, 0.05);
+        }
+
+        /* Input styles */
+        .custom-input {
+          background: var(--input-bg);
+          border: 2px solid rgba(167, 139, 250, 0.2);
+          color: white;
+          transition: all 0.3s ease;
+        }
+
+        .custom-input:focus {
+          outline: none;
+          border-color: var(--purple-primary);
+          box-shadow: 0 0 0 4px rgba(124, 58, 237, 0.1);
+        }
+
+        .custom-input::placeholder {
+          color: rgba(255, 255, 255, 0.4);
+        }
+
+        /* Button gradients */
+        .btn-gradient-purple {
+          background: linear-gradient(135deg, var(--purple-primary) 0%, var(--purple-dark) 100%);
+          transition: all 0.3s ease;
+          position: relative;
+          overflow: hidden;
+        }
+
+        .btn-gradient-purple::before {
+          content: '';
+          position: absolute;
+          top: 0;
+          left: -100%;
+          width: 100%;
+          height: 100%;
+          background: linear-gradient(90deg, transparent, rgba(255, 255, 255, 0.2), transparent);
+          transition: left 0.5s;
+        }
+
+        .btn-gradient-purple:hover::before {
+          left: 100%;
+        }
+
+        .btn-gradient-purple:hover {
+          transform: translateY(-2px);
+          box-shadow: 0 10px 30px rgba(124, 58, 237, 0.4);
+        }
+
+        .btn-gradient-cyan {
+          background: linear-gradient(135deg, var(--cyan-primary) 0%, var(--cyan-dark) 100%);
+          transition: all 0.3s ease;
+        }
+
+        .btn-gradient-cyan:hover {
+          transform: translateY(-2px);
+          box-shadow: 0 10px 30px rgba(6, 182, 212, 0.4);
+        }
+
+        /* Tab animations */
+        .tab-indicator {
+          position: absolute;
+          bottom: 0;
+          height: 3px;
+          background: linear-gradient(90deg, var(--purple-primary), var(--cyan-primary));
+          transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+        }
+
+        /* Feature cards */
+        .feature-card {
+          transition: all 0.3s ease;
+        }
+
+        .feature-card:hover {
+          transform: translateY(-5px);
+          box-shadow: 0 10px 30px rgba(124, 58, 237, 0.2);
+        }
+
+        /* Custom scrollbar */
+        ::-webkit-scrollbar {
+          width: 8px;
+        }
+
+        ::-webkit-scrollbar-track {
+          background: var(--dark-bg);
+        }
+
+        ::-webkit-scrollbar-thumb {
+          background: var(--purple-primary);
+          border-radius: 4px;
+        }
+
+        ::-webkit-scrollbar-thumb:hover {
+          background: var(--purple-light);
+        }
+
+        /* Select dropdown */
+        .custom-select {
+          appearance: none;
+          background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='12' height='12' viewBox='0 0 12 12'%3E%3Cpath fill='%23a78bfa' d='M6 9L1 4h10z'/%3E%3C/svg%3E");
+          background-repeat: no-repeat;
+          background-position: right 1rem center;
+          padding-right: 3rem;
+        }
+
+        /* Logo pulse */
+        .logo-pulse {
+          animation: pulse 3s ease-in-out infinite;
+        }
+
+        @keyframes pulse {
+          0%, 100% { opacity: 1; transform: scale(1); }
+          50% { opacity: 0.8; transform: scale(1.05); }
+        }
+      `}</style>
+
+      {/* Background effects */}
+      <div className="gradient-mesh"></div>
+      <div className="particle"></div>
+      <div className="particle"></div>
+      <div className="particle"></div>
+
+      {/* Header */}
+      <header className="relative z-10 px-6 py-8">
+        <div className="max-w-7xl mx-auto">
+          <div className="flex items-center gap-3 logo-pulse">
+            <div className="w-12 h-12 bg-gradient-to-br from-purple-500 to-cyan-500 rounded-lg flex items-center justify-center">
+              <Store className="w-7 h-7 text-white" />
+            </div>
+            <div>
+              <h1 className="heading-font text-3xl font-bold bg-gradient-to-r from-purple-400 to-cyan-400 bg-clip-text text-transparent">
+                NEARTIME
+              </h1>
+              <p className="text-xs text-purple-300 tracking-widest">BUSINESS PLATFORM</p>
+            </div>
+          </div>
+        </div>
+      </header>
+
+      {/* Main Content */}
+      <main className="relative z-10 px-6 py-8 max-w-7xl mx-auto">
+        <div className="grid lg:grid-cols-2 gap-12 items-center">
+          
+          {/* Left Side - Info Section */}
+          <div className="space-y-8">
+            <div className="fade-in-up delay-1">
+              <h2 className="heading-font text-5xl md:text-6xl font-bold mb-4 leading-tight">
+                Connect Your
+                <span className="block bg-gradient-to-r from-purple-400 via-purple-300 to-cyan-400 bg-clip-text text-transparent">
+                  Service Business
+                </span>
+              </h2>
+              <p className="text-xl text-gray-300 leading-relaxed">
+                Join NEARTIME and reach thousands of local customers looking for services like yours.
+              </p>
+            </div>
+
+            {/* Feature List */}
+            <div className="space-y-4 fade-in-up delay-2">
+              <div className="flex items-start gap-4 feature-card glass-card p-4 rounded-xl">
+                <div className="w-12 h-12 bg-gradient-to-br from-purple-500 to-purple-600 rounded-lg flex items-center justify-center flex-shrink-0">
+                  <CheckCircle className="w-6 h-6" />
+                </div>
+                <div>
+                  <h3 className="heading-font text-lg font-semibold mb-1">Instant Visibility</h3>
+                  <p className="text-gray-400 text-sm">Get discovered by local customers actively searching for your services</p>
+                </div>
+              </div>
+
+              <div className="flex items-start gap-4 feature-card glass-card p-4 rounded-xl">
+                <div className="w-12 h-12 bg-gradient-to-br from-cyan-500 to-cyan-600 rounded-lg flex items-center justify-center flex-shrink-0">
+                  <Clock className="w-6 h-6" />
+                </div>
+                <div>
+                  <h3 className="heading-font text-lg font-semibold mb-1">Easy Management</h3>
+                  <p className="text-gray-400 text-sm">Manage bookings, hours, and customer interactions from one dashboard</p>
+                </div>
+              </div>
+
+              <div className="flex items-start gap-4 feature-card glass-card p-4 rounded-xl">
+                <div className="w-12 h-12 bg-gradient-to-br from-purple-500 to-cyan-500 rounded-lg flex items-center justify-center flex-shrink-0">
+                  <Building2 className="w-6 h-6" />
+                </div>
+                <div>
+                  <h3 className="heading-font text-lg font-semibold mb-1">Professional Profile</h3>
+                  <p className="text-gray-400 text-sm">Showcase your business with photos, reviews, and detailed information</p>
+                </div>
+              </div>
+            </div>
+
+            {/* Stats */}
+            <div className="grid grid-cols-3 gap-4 fade-in-up delay-3">
+              <div className="glass-card p-4 rounded-xl text-center">
+                <div className="heading-font text-3xl font-bold text-cyan-400">500+</div>
+                <div className="text-xs text-gray-400 mt-1">Active Businesses</div>
+              </div>
+              <div className="glass-card p-4 rounded-xl text-center">
+                <div className="heading-font text-3xl font-bold text-purple-400">50K+</div>
+                <div className="text-xs text-gray-400 mt-1">Monthly Visitors</div>
+              </div>
+              <div className="glass-card p-4 rounded-xl text-center">
+                <div className="heading-font text-3xl font-bold text-cyan-400">4.8★</div>
+                <div className="text-xs text-gray-400 mt-1">Avg. Rating</div>
+              </div>
+            </div>
+          </div>
+
+          {/* Right Side - Auth Forms */}
+          <div className="fade-in-up delay-2">
+            <div className="glass-card rounded-2xl p-8 md:p-10 shadow-2xl">
+              
+              {/* Tabs */}
+              <div className="relative mb-8">
+                <div className="flex gap-4 border-b border-purple-500/20">
+                  <button
+                    onClick={() => setActiveTab('login')}
+                    className={`heading-font px-6 py-3 text-lg font-semibold transition-colors relative ${
+                      activeTab === 'login' ? 'text-purple-400' : 'text-gray-400 hover:text-gray-300'
+                    }`}
+                  >
+                    Login
+                  </button>
+                  <button
+                    onClick={() => setActiveTab('register')}
+                    className={`heading-font px-6 py-3 text-lg font-semibold transition-colors relative ${
+                      activeTab === 'register' ? 'text-cyan-400' : 'text-gray-400 hover:text-gray-300'
+                    }`}
+                  >
+                    Register Business
+                  </button>
+                </div>
+                <div 
+                  className="tab-indicator"
+                  style={{
+                    left: activeTab === 'login' ? '0' : '50%',
+                    width: '50%'
+                  }}
+                ></div>
+              </div>
+
+              {/* Login Form */}
+              {activeTab === 'login' && (
+                <form className="space-y-6" onSubmit={(e) => e.preventDefault()}>
+                  <div>
+                    <label className="block text-sm font-semibold mb-2 text-purple-300">
+                      Email Address
+                    </label>
+                    <div className="relative">
+                      <Mail className="absolute left-4 top-1/2 transform -translate-y-1/2 w-5 h-5 text-purple-400" />
+                      <input
+                        type="email"
+                        placeholder="you@business.com"
+                        className="custom-input w-full pl-12 pr-4 py-4 rounded-lg text-base"
+                      />
+                    </div>
+                  </div>
+
+                  <div>
+                    <label className="block text-sm font-semibold mb-2 text-purple-300">
+                      Password
+                    </label>
+                    <div className="relative">
+                      <Lock className="absolute left-4 top-1/2 transform -translate-y-1/2 w-5 h-5 text-purple-400" />
+                      <input
+                        type="password"
+                        placeholder="••••••••"
+                        className="custom-input w-full pl-12 pr-4 py-4 rounded-lg text-base"
+                      />
+                    </div>
+                  </div>
+
+                  <div className="flex items-center justify-between">
+                    <label className="flex items-center gap-2 cursor-pointer">
+                      <input type="checkbox" className="w-4 h-4 accent-purple-500" />
+                      <span className="text-sm text-gray-400">Remember me</span>
+                    </label>
+                    <a href="#" className="text-sm text-cyan-400 hover:text-cyan-300">
+                      Forgot password?
+                    </a>
+                  </div>
+
+                  <button
+                    type="submit"
+                    className="btn-gradient-purple w-full py-4 rounded-lg font-semibold text-base flex items-center justify-center gap-2"
+                  >
+                    Sign In to Dashboard
+                    <ArrowRight className="w-5 h-5" />
+                  </button>
+
+                  <div className="text-center text-sm text-gray-400">
+                    Don't have an account?{' '}
+                    <button
+                      onClick={() => setActiveTab('register')}
+                      className="text-cyan-400 hover:text-cyan-300 font-semibold"
+                    >
+                      Register your business
+                    </button>
+                  </div>
+                </form>
+              )}
+
+              {/* Registration Form */}
+              {activeTab === 'register' && (
+                <form className="space-y-5" onSubmit={(e) => e.preventDefault()}>
+                  <div className="grid md:grid-cols-2 gap-4">
+                    <div>
+                      <label className="block text-sm font-semibold mb-2 text-cyan-300">
+                        Business Name *
+                      </label>
+                      <div className="relative">
+                        <Building2 className="absolute left-4 top-1/2 transform -translate-y-1/2 w-5 h-5 text-cyan-400" />
+                        <input
+                          type="text"
+                          placeholder="Your Business Name"
+                          className="custom-input w-full pl-12 pr-4 py-3 rounded-lg"
+                        />
+                      </div>
+                    </div>
+
+                    <div>
+                      <label className="block text-sm font-semibold mb-2 text-cyan-300">
+                        Business Type *
+                      </label>
+                      <div className="relative">
+                        <Tag className="absolute left-4 top-1/2 transform -translate-y-1/2 w-5 h-5 text-cyan-400" />
+                        <select
+                          value={businessType}
+                          onChange={(e) => setBusinessType(e.target.value)}
+                          className="custom-input custom-select w-full pl-12 pr-4 py-3 rounded-lg"
+                        >
+                          <option value="">Select type</option>
+                          <option value="salon">Salon / Barbershop</option>
+                          <option value="spa">Spa / Wellness</option>
+                          <option value="gym">Gym / Fitness Center</option>
+                          <option value="yoga">Yoga Studio</option>
+                          <option value="massage">Massage Therapy</option>
+                          <option value="nails">Nail Salon</option>
+                          <option value="dental">Dental Clinic</option>
+                          <option value="physio">Physiotherapy</option>
+                          <option value="other">Other Service</option>
+                        </select>
+                      </div>
+                    </div>
+                  </div>
+
+                  <div>
+                    <label className="block text-sm font-semibold mb-2 text-cyan-300">
+                      Owner Name *
+                    </label>
+                    <div className="relative">
+                      <User className="absolute left-4 top-1/2 transform -translate-y-1/2 w-5 h-5 text-cyan-400" />
+                      <input
+                        type="text"
+                        placeholder="Your full name"
+                        className="custom-input w-full pl-12 pr-4 py-3 rounded-lg"
+                      />
+                    </div>
+                  </div>
+
+                  <div>
+                    <label className="block text-sm font-semibold mb-2 text-cyan-300">
+                      Email Address *
+                    </label>
+                    <div className="relative">
+                      <Mail className="absolute left-4 top-1/2 transform -translate-y-1/2 w-5 h-5 text-cyan-400" />
+                      <input
+                        type="email"
+                        placeholder="business@example.com"
+                        className="custom-input w-full pl-12 pr-4 py-3 rounded-lg"
+                      />
+                    </div>
+                  </div>
+
+                  <div>
+                    <label className="block text-sm font-semibold mb-2 text-cyan-300">
+                      Phone Number *
+                    </label>
+                    <div className="relative">
+                      <Phone className="absolute left-4 top-1/2 transform -translate-y-1/2 w-5 h-5 text-cyan-400" />
+                      <input
+                        type="tel"
+                        placeholder="+91 98765 43210"
+                        className="custom-input w-full pl-12 pr-4 py-3 rounded-lg"
+                      />
+                    </div>
+                  </div>
+
+                  <div>
+     
