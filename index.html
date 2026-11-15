@@ -7,6 +7,9 @@
     <link rel="stylesheet" href="styles.css">
     <link rel="icon" href="data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'><text y='.9em' font-size='90'>✂️</text></svg>">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <!-- Supabase JS CDN -->
+    <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
+    <script src="supabase-config.js"></script>
 </head>
 <body>
     <header class="header">
@@ -25,6 +28,35 @@
             </nav>
             <div class="header-actions">
                 <button class="btn btn-outline" id="langToggle">हिंदी</button>
+                <!-- Auth buttons (shown when logged out) -->
+                <div class="auth-btns" id="authBtns">
+                    <a href="auth.html" class="btn btn-outline-auth">Login</a>
+                    <a href="auth.html#register" class="btn btn-primary">Register</a>
+                </div>
+                <!-- User menu (shown when logged in) -->
+                <div class="user-menu" id="userMenu" style="display:none;">
+                    <button class="user-avatar-btn" id="userAvatarBtn" onclick="toggleUserDropdown()">
+                        <span class="user-avatar-icon"><i class="fas fa-user"></i></span>
+                        <span class="user-name-text" id="userNameText">User</span>
+                        <i class="fas fa-chevron-down" style="font-size:0.75rem;"></i>
+                    </button>
+                    <div class="user-dropdown" id="userDropdown">
+                        <div class="dropdown-header">
+                            <i class="fas fa-user-circle"></i>
+                            <div>
+                                <strong id="dropdownName">User</strong>
+                                <small id="dropdownEmail">user@email.com</small>
+                            </div>
+                        </div>
+                        <hr class="dropdown-divider">
+                        <a href="#" class="dropdown-item"><i class="fas fa-calendar-check"></i> My Bookings</a>
+                        <a href="#" class="dropdown-item"><i class="fas fa-cog"></i> Account Settings</a>
+                        <hr class="dropdown-divider">
+                        <button class="dropdown-item logout-btn" onclick="logoutUser()">
+                            <i class="fas fa-sign-out-alt"></i> Logout
+                        </button>
+                    </div>
+                </div>
                 <button class="btn btn-primary" id="bookNowHeader">Book Now</button>
             </div>
             <button class="mobile-menu-btn" id="mobileMenuBtn">
@@ -479,5 +511,62 @@
     </div>
 
     <script src="script.js"></script>
+    <script>
+        // ===== Supabase Auth integration for index.html =====
+        (function() {
+
+            async function updateHeaderAuth() {
+                const { data: { session } } = await window.db.auth.getSession();
+                const authBtns = document.getElementById('authBtns');
+                const userMenu = document.getElementById('userMenu');
+
+                if (session && session.user) {
+                    authBtns.style.display = 'none';
+                    userMenu.style.display = 'flex';
+
+                    // Fetch profile from Supabase
+                    const { data: profile } = await window.db
+                        .from('profiles')
+                        .select('first_name, last_name, email')
+                        .eq('id', session.user.id)
+                        .single();
+
+                    const firstName = profile?.first_name || session.user.email.split('@')[0];
+                    const fullName  = `${profile?.first_name || ''} ${profile?.last_name || ''}`.trim() || session.user.email;
+
+                    document.getElementById('userNameText').textContent  = firstName;
+                    document.getElementById('dropdownName').textContent  = fullName;
+                    document.getElementById('dropdownEmail').textContent = session.user.email;
+                } else {
+                    authBtns.style.display = 'flex';
+                    userMenu.style.display = 'none';
+                }
+            }
+
+            window.toggleUserDropdown = function() {
+                document.getElementById('userDropdown').classList.toggle('open');
+            };
+
+            window.logoutUser = async function() {
+                await window.db.auth.signOut();
+                document.getElementById('userDropdown').classList.remove('open');
+                updateHeaderAuth();
+            };
+
+            // Close dropdown on outside click
+            document.addEventListener('click', function(e) {
+                const menu = document.getElementById('userMenu');
+                if (menu && !menu.contains(e.target)) {
+                    const dropdown = document.getElementById('userDropdown');
+                    if (dropdown) dropdown.classList.remove('open');
+                }
+            });
+
+            // Listen for auth changes (e.g. after OAuth redirect)
+            window.db.auth.onAuthStateChange(() => updateHeaderAuth());
+
+            document.addEventListener('DOMContentLoaded', updateHeaderAuth);
+        })();
+    </script>
 </body>
 </html>
